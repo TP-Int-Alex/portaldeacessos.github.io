@@ -1,17 +1,19 @@
-# Atlas — Gestão de clientes
+# Atlas — Portal de gestão
 
-Aplicação web responsiva para cadastro e acompanhamento de clientes locais e internos, usuários, indicadores e atividades.
+Portal responsivo de clientes, usuários, permissões e atividades. Não requer serviço ou dependências externas para funcionar: utiliza IndexedDB, o banco de dados integrado ao navegador.
 
-## Usar
+## Primeiro acesso
 
-Abra `index.html` em um navegador moderno. No primeiro acesso, crie a conta principal com nome, e-mail e senha de pelo menos 8 caracteres. A conta principal é administradora e pode criar usuários, escolher o perfil (administrador ou equipe) e desativar acessos.
+Na pasta do projeto, execute `python -m http.server 8000` e abra `http://localhost:8000`, ou use o endereço HTTPS do site publicado. Crie a conta principal. Se já havia uma conta neste navegador na versão anterior, os dados existentes em `localStorage` são migrados automaticamente para IndexedDB na primeira abertura. Entre com o mesmo e-mail e senha.
 
-O perfil Equipe pode consultar, cadastrar e editar clientes. O Administrador também pode excluir clientes e gerenciar usuários. Os cadastros podem ser exportados em CSV. O histórico registra ações de login, clientes e usuários.
+Na área **Usuários**, a conta administradora pode criar usuários e configurar individualmente as permissões para visualizar, cadastrar, editar e excluir clientes, consultar usuários e ver o histórico de atividades. A conta principal sempre mantém acesso total.
 
-## Publicar no GitHub Pages
+## Armazenamento local
 
-O repositório pode servir esta página estática pela raiz. Ative **Settings → Pages → Deploy from a branch** e escolha a branch principal e a pasta `/ (root)`. Após publicar, o botão **Compartilhar** copia o endereço da página.
+O banco fica no perfil do navegador e da origem do site. Os dados persistem após fechar e abrir o navegador, mas não são sincronizados entre computadores, navegadores diferentes ou perfis diferentes. Limpar os dados do site no navegador também pode apagar o banco. Para usar uma base compartilhada com várias pessoas em dispositivos distintos, é necessário hospedar um backend com banco central e autenticação; o GitHub Pages, sozinho, hospeda apenas os arquivos estáticos.
 
-## Limite importante do modo atual
+As permissões desta versão controlam o que cada usuário vê e faz na interface, mas não substituem as regras de segurança de um servidor para proteger dados compartilhados.
 
-Esta versão salva os dados no `localStorage` do navegador. Cada navegador/dispositivo terá seus próprios cadastros, usuários e registros; criar usuários dentro do portal não cria contas compartilhadas na internet. O login local serve para organização e não substitui autenticação de servidor. Antes de usar com dados reais ou compartilhar uma base entre pessoas, conecte um backend com autenticação e banco de dados (por exemplo, Supabase ou Firebase), aplique regras de acesso no servidor e migre o armazenamento. O GitHub Pages, sozinho, não oferece esse backend.
+## Publicar a interface
+
+O repositório pode ser publicado no GitHub Pages selecionando `main` e a pasta `/ (root)` em **Settings → Pages**. Isso publica a interface, mas cada navegador continuará com seu próprio banco local.
