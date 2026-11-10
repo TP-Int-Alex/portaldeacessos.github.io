@@ -1,19 +1,27 @@
-# Atlas — Portal de gestão
+# MyClient — Portal de operações de TI
 
-Portal responsivo de clientes, usuários, permissões e atividades. Não requer serviço ou dependências externas para funcionar: utiliza IndexedDB, o banco de dados integrado ao navegador.
+Portal responsivo para organizar empresas atendidas, contatos, contratos, acessos remotos e histórico de suporte. A identidade visual usa a logo vetorial `logo-myclients.svg`.
 
-## Primeiro acesso
+## Recursos
 
-Na pasta do projeto, execute `python -m http.server 8000` e abra `http://localhost:8000`, ou use o endereço HTTPS do site publicado. Crie a conta principal. Se já havia uma conta neste navegador na versão anterior, os dados existentes em `localStorage` são migrados automaticamente para IndexedDB na primeira abertura. Entre com o mesmo e-mail e senha.
+- Cadastro de empresas com dados fiscais, contatos, unidade, contrato, SLA, janela de suporte e observações.
+- Inventário por empresa para AnyDesk, VPN, RDP, SSH, TeamViewer e portais web, com identificador, endpoint, login, MFA, responsável, data de verificação e validade.
+- Referência ao cofre de senhas para localizar credenciais sem salvar senhas ou códigos MFA no portal.
+- Painel com acessos ativos e itens próximos do vencimento; auditoria das ações; exportação CSV dos cadastros de empresas.
+- Usuários e permissões individuais para visualizar, cadastrar, editar e excluir clientes e acessos.
 
-Na área **Usuários**, a conta administradora pode criar usuários e configurar individualmente as permissões para visualizar, cadastrar, editar e excluir clientes, consultar usuários e ver o histórico de atividades. A conta principal sempre mantém acesso total.
+## Executar localmente
 
-## Armazenamento local
+Na pasta do projeto, execute `python -m http.server 8000` e abra `http://localhost:8000`. No primeiro acesso, crie a conta principal.
 
-O banco fica no perfil do navegador e da origem do site. Os dados persistem após fechar e abrir o navegador, mas não são sincronizados entre computadores, navegadores diferentes ou perfis diferentes. Limpar os dados do site no navegador também pode apagar o banco. Para usar uma base compartilhada com várias pessoas em dispositivos distintos, é necessário hospedar um backend com banco central e autenticação; o GitHub Pages, sozinho, hospeda apenas os arquivos estáticos.
+Os dados anteriores salvos no mesmo navegador/origem são migrados do armazenamento legado ao abrir a nova versão. O banco IndexedDB persiste no perfil atual do navegador.
 
-As permissões desta versão controlam o que cada usuário vê e faz na interface, mas não substituem as regras de segurança de um servidor para proteger dados compartilhados.
+## Armazenamento e segurança
 
-## Publicar a interface
+Esta versão mantém a base no navegador. Os usuários e registros não são compartilhados entre aparelhos ou perfis diferentes. Para atendimento multiusuário com uma base central, o portal precisa de um backend hospedado com autenticação e banco de dados.
 
-O repositório pode ser publicado no GitHub Pages selecionando `main` e a pasta `/ (root)` em **Settings → Pages**. Isso publica a interface, mas cada navegador continuará com seu próprio banco local.
+O inventário não deve conter senhas, chaves privadas, códigos de recuperação ou segredos MFA. Use um cofre de credenciais da empresa e preencha somente o caminho/referência desse item. As permissões desta interface organizam o acesso no navegador; não substituem controles de segurança no servidor.
+
+## GitHub Pages
+
+O GitHub Pages publica a interface estática ao selecionar `main` e `/ (root)` em **Settings → Pages**. Ele não executa o backend necessário para compartilhar o banco entre usuários.
